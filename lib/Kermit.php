@@ -7,11 +7,17 @@
 class Kermit{
 	protected $modules;
 	public function __construct(){
-		$modules = array();
+		$this->modules = array();
+		$this->modules['core'] = $this;
+		$this->load('Kermit_Module');
 	}
 	
 	function load($lib, $name = false){
 		require_once(__KERMIT_LIB__ . '/' . $lib . '.php');
-		if($name) $modules[$name] = new $lib($this);
+		if($name) $this->modules[$name] = new $lib($this);
+	}
+	
+	function __get($name){
+		return $this->modules[$name];
 	}
 }
