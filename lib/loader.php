@@ -1,5 +1,10 @@
 <?php
 
-include(dirname(__FILE__) . '/vendor/Doctrine.php');
-include(dirname(__FILE__) . '/vendor/xmlrpc_lib.php');
-include(dirname(__FILE__) . '/database.php');
+// Define this dir as KERMIT_LIB
+define('__KERMIT_LIB__', dirname(__FILE__));
+// Load the Kermit class
+require_once(dirname(__FILE__) . '/Kermit.php');
+
+$kermit = new Kermit();
+$kermit->load('vendor/xmlrpc_lib');
+$kermit->load('Database', 'db');
