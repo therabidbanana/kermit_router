@@ -1,4 +1,4 @@
 <?php
 
-include "lib/loader.php";
+include "bootstrap.php";
 

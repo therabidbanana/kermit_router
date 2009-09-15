@@ -1,0 +1,6 @@
+vendor:
+  - Doctrine
+  - xmlrpc_lib
+kermit:
+  Database: db
+  Xmlrpc: xmlrpc

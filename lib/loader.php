@@ -6,4 +6,4 @@ define('__KERMIT_LIB__', dirname(__FILE__));
 require_once(dirname(__FILE__) . '/Kermit.php');
 
 $kermit = new Kermit();
-$kermit->load('Database', 'db');
+$kermit->load_modules();

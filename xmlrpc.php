@@ -3,6 +3,5 @@
 /* The XMLRPC server for Kermit */
 
 
-include_once('lib/loader.php');
-$kermit->load('Xmlrpc', 'xmlrpc');
+include_once('bootstrap.php');
 $kermit->xmlrpc->serve();
