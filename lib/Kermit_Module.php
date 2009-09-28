@@ -12,4 +12,8 @@ class Kermit_Module{
 	public function afterLoad(){
 		return true;
 	}
+	
+	public function whenReady($module){
+		return true;
+	}
 }

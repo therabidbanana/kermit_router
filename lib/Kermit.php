@@ -17,7 +17,14 @@ class Kermit{
 		if(!isset($this->modules[$name])){
 			require_once(__KERMIT_LIB__ . '/' . $lib . '.php');
 			if($name) $this->modules[$name] = new $lib($this);
+			foreach($this->modules as $my_name => $my_mod):
+				$my_mod->whenReady($name);
+			endforeach;
 		}
+	}
+	
+	function whenReady($mod){
+		return true;
 	}
 	
 	function load_modules(){
