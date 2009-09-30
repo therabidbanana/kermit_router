@@ -12,4 +12,9 @@ class Database extends Kermit_Module{
 		$this->connection = Doctrine_Manager::connection($config['connections'][$active]);
 		Doctrine::loadModels(__KERMIT_ROOT__. '/'. 'models');
 	}
+	
+	// Function to return who is online
+	public function whosOnline(){
+		
+	}
 }
