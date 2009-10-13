@@ -10,7 +10,7 @@ class Xmlrpc extends Kermit_Module{
 	}
 	
 	function whenReady($module){
-		if($module = 'xmlrpc'):
+		if($module == 'xmlrpc'):
 			$this->xmlrpc->add('test.test', get_class($this), 'test_xmlrpc');
 			$this->xmlrpc->add('test.testdb', get_class($this), 'test_db');
 			$this->xmlrpc->add('test.testfunc', get_class($this), 'test_func');
@@ -51,4 +51,6 @@ class Xmlrpc extends Kermit_Module{
 			'time' => $foo
 		);
 	}
+	
+	
 }

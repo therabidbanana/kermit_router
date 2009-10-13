@@ -4,3 +4,4 @@ vendor:
 kermit:
   Database: db
   Xmlrpc: xmlrpc
+  Who: who

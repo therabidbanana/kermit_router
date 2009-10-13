@@ -1,0 +1,17 @@
+get whos online -
+	computers : hostname, ip, status, picture, up, down, recently online?
+set whos online -
+	status
+	picture
+	hostname
+bandwidth - 
+	per hostname/ip : current up / down
+bandwidth history -
+	specify two dates, show data points between
+speed test - 
+	up and down
+get speed test results -
+	save for later
+limiting
+	given service/port/host limit bandwidth
+	disabling limit
