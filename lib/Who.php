@@ -21,11 +21,11 @@ class Who extends Kermit_Module{
 			$kerm = $kermit->who->kermitForHost($host);
 			if($host->status && !$kerm->allowed):
 				$ret['hosts'][] = array('ip' => $host->ip, 'recent_activity' => $host->status, 
-										'wireless' => !$wired, 'hostname' => $kerm->name, 'unknown' => true,
+										'wireless' => !$wired, 'hostname' => $kerm->name, 'recognized' => false,
 										'id' => $kerm->id);
 			elseif($kerm->allowed):
 				$ret['hosts'][] = array('ip' => $host->ip, 'recent_activity' => $host->status, 
-										'wireless' => !$wired, 'hostname' => $kerm->name, 'unknown' => false,
+										'wireless' => !$wired, 'hostname' => $kerm->name, 'recognized' => true,
 										'status' => $kerm->status, 'id' => $kerm->id);
 			endif;
 		endforeach;

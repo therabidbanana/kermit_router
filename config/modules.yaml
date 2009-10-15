@@ -5,3 +5,4 @@ kermit:
   Database: db
   Xmlrpc: xmlrpc
   Who: who
+  History: history

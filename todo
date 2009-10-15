@@ -2,7 +2,7 @@ get whos online -
 	computers : hostname, ip, status, picture, up, down, recently online?
 set whos online -
 	status
-	picture
+	picture	
 	hostname
 bandwidth - 
 	per hostname/ip : current up / down
