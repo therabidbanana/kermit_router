@@ -19,14 +19,12 @@ class Who extends Kermit_Module{
 			else $wired = true;
 			
 			$kerm = $kermit->who->kermitForHost($host);
-			if($host->status && !$kerm->allowed):
+			$host_up = $kermit->history->lastUpForIp($host->ip);
+			$host_down = $kermit->history->lastDownForIp($host->ip);
+			if(($host->status && !$kerm->allowed) || $kerm->allowed):
 				$ret['hosts'][] = array('ip' => $host->ip, 'recent_activity' => $host->status, 
-										'wireless' => !$wired, 'hostname' => $kerm->name, 'recognized' => false,
-										'id' => $kerm->id);
-			elseif($kerm->allowed):
-				$ret['hosts'][] = array('ip' => $host->ip, 'recent_activity' => $host->status, 
-										'wireless' => !$wired, 'hostname' => $kerm->name, 'recognized' => true,
-										'status' => $kerm->status, 'id' => $kerm->id);
+										'wireless' => !$wired, 'hostname' => $kerm->name, 'recognized' => $kerm->allowed,
+										'id' => $kerm->id, 'up' => $host_up, 'down' => $host_down);
 			endif;
 		endforeach;
 		return $ret;

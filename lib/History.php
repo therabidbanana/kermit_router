@@ -10,17 +10,36 @@ class History extends Kermit_Module{
 	}
 	
 	public static function history_list(){
-		$list = Doctrine::getTable('TotalTraffic')->findAll();
+		$hosts = Doctrine::getTable('Host')->findAll();
 		$ret = array();
-		
-		foreach($list as $hist):
-			$time = strtotime($hist->date ." ".$hist->max) - strtotime($hist->date ." ".$hist->min);
-			$avg = $hist->bytes / $time;
-			$me = $hist->toArray();
-			$me['avg'] = $avg;
-			$ret[] = $me;
+		foreach($hosts as $host):
+			$history = Doctrine_Query::create()
+				->from('TrafficHistory')
+				->where('ip = ?', $host->ip)
+				->orderBy('end_time ASC')
+				->execute();
+			$ret[$host->ip] = $history->toArray();
 		endforeach;
-		return array('hosts' => $ret);
+		return array('history' => $ret);
+	}
+	public function lastUpForIp($ip){
+		$ret = Doctrine_Query::create()
+			->from('TrafficHistory')
+			->orderBy('end_time DESC')
+			->where('ip = ?', $ip)
+			->limit(1)
+			->fetchOne();
+		return $ret['up_avg'];
+	}
+	
+	public function lastDownForIp($ip){
+		$ret = Doctrine_Query::create()
+			->from('TrafficHistory')
+			->orderBy('end_time DESC')
+			->where('ip = ?', $ip)
+			->limit(1)
+			->fetchOne();
+		return $ret['down_avg'];
 	}
 	
 	public static function data_point(){
@@ -86,4 +105,5 @@ class History extends Kermit_Module{
 		endforeach;
 		return array('message' => 'data saved');
 	}
+	
 }
