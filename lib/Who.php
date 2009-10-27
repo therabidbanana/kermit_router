@@ -21,10 +21,14 @@ class Who extends Kermit_Module{
 			$kerm = $kermit->who->kermitForHost($host);
 			$host_up = $kermit->history->lastUpForIp($host->ip);
 			$host_down = $kermit->history->lastDownForIp($host->ip);
+			$host_up_avg = $kermit->history->lastUpAvgForIp($host->ip);
+			$host_down_avg = $kermit->history->lastDownAvgForIp($host->ip);
 			if(($host->status && !$kerm->allowed) || $kerm->allowed):
 				$ret['hosts'][] = array('ip' => $host->ip, 'recent_activity' => $host->status, 
+										'status' => $kerm->status,
 										'wireless' => !$wired, 'hostname' => $kerm->name, 'recognized' => $kerm->allowed,
-										'id' => $kerm->id, 'up' => $host_up, 'down' => $host_down);
+										'id' => $kerm->id, 'up' => $host_up, 'down' => $host_down,
+										'up_avg' => $host_up_avg, 'down_avg' => $host_down_avg);
 			endif;
 		endforeach;
 		return $ret;
