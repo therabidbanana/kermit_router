@@ -6,6 +6,7 @@ class Who extends Kermit_Module{
 			$this->xmlrpc->add('who.list', get_class($this), 'who_list');
 			$this->xmlrpc->add('who.setHostname', get_class($this), 'setHostname');
 			$this->xmlrpc->add('who.setStatus', get_class($this), 'setStatus');
+			$this->xmlrpc->add('who.setImage', get_class($this), 'setImage');
 			$this->xmlrpc->add('who.getImages', get_class($this), 'getImages');
 		endif;
 	}
@@ -29,7 +30,8 @@ class Who extends Kermit_Module{
 										'status' => $kerm->status,
 										'wireless' => !$wired, 'hostname' => $kerm->name, 'recognized' => $kerm->allowed,
 										'id' => $kerm->id, 'up' => $host_up, 'down' => $host_down,
-										'up_avg' => $host_up_avg, 'down_avg' => $host_down_avg);
+										'up_avg' => $host_up_avg, 'down_avg' => $host_down_avg,
+										'image' => $kerm->image);
 			endif;
 		endforeach;
 		return $ret;
@@ -56,6 +58,19 @@ class Who extends Kermit_Module{
 			$kerm->allowed = 1;
 			$kerm->save();
 			return array('status' => 'success', 'error' => 0, 'message' => 'Hostname successfully updated to '.$name);
+		else:
+			return array('status' => 'error', 'error' => 1, 'message' => 'Host could not be found');
+		endif;
+	}
+	
+	public static function setImage($id, $src){
+		$kerm = Doctrine::getTable('KermitHost')->findOneById($id);
+		if($kerm):
+			$kerm->image = $src;
+			// Assume the client is known now, since we're giving it an image.
+			$kerm->allowed = 1;
+			$kerm->save();
+			return array('status' => 'success', 'error' => 0, 'message' => 'Image successfully updated to '.$name);
 		else:
 			return array('status' => 'error', 'error' => 1, 'message' => 'Host could not be found');
 		endif;

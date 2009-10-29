@@ -177,6 +177,11 @@ class History extends Kermit_Module{
 		Doctrine_Query::create()
 			->delete('Traffic')
 			->execute();
+		// Delete traffic history older than new data point by seven days
+		Doctrine_Query::create()
+			->delete('TrafficHistory')
+			->where('end_time < ?', date('Y-m-d H:i:s', ($ended - 60*60*24*7)))
+			->execute();
 		$ret = array();
 		// Finally, save data points
 		foreach($ips as $ip => $stuff):
