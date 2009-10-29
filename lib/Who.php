@@ -6,6 +6,7 @@ class Who extends Kermit_Module{
 			$this->xmlrpc->add('who.list', get_class($this), 'who_list');
 			$this->xmlrpc->add('who.setHostname', get_class($this), 'setHostname');
 			$this->xmlrpc->add('who.setStatus', get_class($this), 'setStatus');
+			$this->xmlrpc->add('who.getImages', get_class($this), 'getImages');
 		endif;
 	}
 	
@@ -72,5 +73,25 @@ class Who extends Kermit_Module{
 			return array('status' => 'error', 'error' => 1, 'message' => 'Host could not be found');
 		endif;
 
+	}
+	
+	public static function getImages(){	
+		$dir = __KERMIT_ROOT__ . '/images';
+		$handle = @opendir($dir);
+		$files = array();
+		$error = false;
+		if(empty($handle)):
+			$error = true;
+		else:
+			while(false !== ($file = readdir($handle))):
+				if(is_file($dir . '/'. $file)):
+					$files[] = $file;
+				endif;
+			endwhile;
+		endif;
+		
+		closedir($handle);
+		if($error) array('status' => 'error', 'message' => 'There was a problem opening the directory. Check permissions');
+		else return array('status' => 'success', 'images' => $files);
 	}
 }

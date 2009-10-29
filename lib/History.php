@@ -9,6 +9,10 @@ class History extends Kermit_Module{
 			$this->xmlrpc->add('history.last_hour', get_class($this), 'last_hour');
 			$this->xmlrpc->add('history.last_day', get_class($this), 'last_day');
 			$this->xmlrpc->add('history.data_point', get_class($this), 'data_point');
+			$this->xmlrpc->add('history.lastTen', get_class($this), 'last_ten');
+			$this->xmlrpc->add('history.lastHour', get_class($this), 'last_hour');
+			$this->xmlrpc->add('history.lastDay', get_class($this), 'last_day');
+			$this->xmlrpc->add('history.dataPoint', get_class($this), 'data_point');
 		endif;
 	}
 	
@@ -31,7 +35,7 @@ class History extends Kermit_Module{
 		$hosts = Doctrine::getTable('Host')->findAll();
 		$ret = array();
 		foreach($hosts as $host):
-			$ret[$host->ip] = $kermit->history->historyBlocksForIp($host->ip, time(), 5);
+			$ret[$host->ip] = $kermit->history->historyBlocksForIp($host->ip, time() - 10*60, 5);
 		endforeach;
 		return array('history' => $ret);
 	}
@@ -43,7 +47,7 @@ class History extends Kermit_Module{
 		$hosts = Doctrine::getTable('Host')->findAll();
 		$ret = array();
 		foreach($hosts as $host):
-			$ret[$host->ip] = $kermit->history->historyBlocksForIp($host->ip, time(), 12, 5*60);
+			$ret[$host->ip] = $kermit->history->historyBlocksForIp($host->ip, time() - 60*60, 12, 5*60);
 		endforeach;
 		return array('history' => $ret);
 	}
@@ -53,23 +57,27 @@ class History extends Kermit_Module{
 		$hosts = Doctrine::getTable('Host')->findAll();
 		$ret = array();
 		foreach($hosts as $host):
-			$ret[$host->ip] = $kermit->history->historyBlocksForIp($host->ip, time(), 24, 60*60);
+			$ret[$host->ip] = $kermit->history->historyBlocksForIp($host->ip, time() - 24*60*60, 24, 60*60);
 		endforeach;
 		return array('history' => $ret);
 	}
 	
 	public function dateRangeForIp($ip, $timestamp1, $timestamp2){
-		$padding = 20;								// Create some extra room to work
+		date_default_timezone_set('America/New_York');
+		$padding = 40;								// Create some extra room to work
 		$timestamp1 = $timestamp1 - $padding; 
 		$timestamp2 = $timestamp2 + $padding;
+		$date1 = date('Y-m-d H:i:s', $timestamp1);
+		$date2 = date('Y-m-d H:i:s', $timestamp2);
 		$history = Doctrine_Query::create()
-			->select('MIN(start_time), MAX(end_time), SUM(up), SUM(down), AVG(up_avg), AVG(down_avg)')
+			->select('	MIN(start_time) as start_time, MAX(end_time) as end_time, 
+						SUM(up) as up, SUM(down) as down, AVG(up_avg) as up_avg, AVG(down_avg) as down_avg')
 			->from('TrafficHistory')
 			->where('ip = ?', $ip)
-			->andWhere('start_time > ? AND start_time < ?', $timestamp1, $timestamp2)
-			->andWhere('end_time < ? AND end_time > ?', $timestamp2, $timestamp1)
+			->andWhere('start_time > ? AND start_time < ?', array($date1, $date2))
+			->andWhere('end_time < ? AND end_time > ?', array($date2, $date1))
 			->orderBy('end_time ASC');
-		$ret = $history->fetchOne->toArray();
+		$ret = $history->fetchOne()->toArray();
 		return $ret;
 	}
 	
