@@ -1,5 +1,5 @@
 <?php
 
 include "bootstrap.php";
-
-$kermit->xmlrpc->test_db();
+ 
+header('Location: '.$kermit->flex->latest());

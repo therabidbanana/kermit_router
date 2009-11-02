@@ -25,6 +25,7 @@ class Who extends Kermit_Module{
 			$host_down = $kermit->history->lastDownForIp($host->ip);
 			$host_up_avg = $kermit->history->lastUpAvgForIp($host->ip);
 			$host_down_avg = $kermit->history->lastDownAvgForIp($host->ip);
+			
 			if(($host->status && !$kerm->allowed) || $kerm->allowed):
 				$ret['hosts'][] = array('ip' => $host->ip, 'recent_activity' => $host->status, 
 										'status' => $kerm->status,

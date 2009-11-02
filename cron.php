@@ -7,7 +7,7 @@
 	<p>Executing...</p>
 	<?php 
 		include_once('bootstrap.php');
-		History::data_point(); 
+		History::dataPoint(); 
 	?>
 </body>
 </html>

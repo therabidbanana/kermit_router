@@ -5,14 +5,14 @@ class History extends Kermit_Module{
 	public function whenReady($module){
 		if($module == 'xmlrpc'):
 			$this->xmlrpc->add('history.list', get_class($this), 'history_list');
-			$this->xmlrpc->add('history.last_ten', get_class($this), 'last_ten');
-			$this->xmlrpc->add('history.last_hour', get_class($this), 'last_hour');
-			$this->xmlrpc->add('history.last_day', get_class($this), 'last_day');
-			$this->xmlrpc->add('history.data_point', get_class($this), 'data_point');
-			$this->xmlrpc->add('history.lastTen', get_class($this), 'last_ten');
-			$this->xmlrpc->add('history.lastHour', get_class($this), 'last_hour');
-			$this->xmlrpc->add('history.lastDay', get_class($this), 'last_day');
-			$this->xmlrpc->add('history.dataPoint', get_class($this), 'data_point');
+			$this->xmlrpc->add('history.last_ten', get_class($this), 'lastTen');
+			$this->xmlrpc->add('history.last_hour', get_class($this), 'lastHour');
+			$this->xmlrpc->add('history.last_day', get_class($this), 'lastDay');
+			$this->xmlrpc->add('history.data_point', get_class($this), 'dataPoint');
+			$this->xmlrpc->add('history.lastTen', get_class($this), 'lastTen');
+			$this->xmlrpc->add('history.lastHour', get_class($this), 'lastHour');
+			$this->xmlrpc->add('history.lastDay', get_class($this), 'lastDay');
+			$this->xmlrpc->add('history.dataPoint', get_class($this), 'dataPoint');
 		endif;
 	}
 	
@@ -30,34 +30,34 @@ class History extends Kermit_Module{
 		return array('history' => $ret);
 	}
 	
-	public static function last_ten(){
+	public static function lastTen(){
 		global $kermit;
 		$hosts = Doctrine::getTable('Host')->findAll();
 		$ret = array();
 		foreach($hosts as $host):
-			$ret[$host->ip] = $kermit->history->historyBlocksForIp($host->ip, time() - 10*60, 5);
+			$ret[] = $kermit->history->historyBlocksForIp($host->ip, time() - 10*60, 5);
 		endforeach;
 		return array('history' => $ret);
 	}
 	
 
 	
-	public static function last_hour(){
+	public static function lastHour(){
 		global $kermit;
 		$hosts = Doctrine::getTable('Host')->findAll();
 		$ret = array();
 		foreach($hosts as $host):
-			$ret[$host->ip] = $kermit->history->historyBlocksForIp($host->ip, time() - 60*60, 12, 5*60);
+			$ret[] = $kermit->history->historyBlocksForIp($host->ip, time() - 60*60, 12, 5*60);
 		endforeach;
 		return array('history' => $ret);
 	}
 	
-	public static function last_day(){
+	public static function lastDay(){
 		global $kermit;
 		$hosts = Doctrine::getTable('Host')->findAll();
 		$ret = array();
 		foreach($hosts as $host):
-			$ret[$host->ip] = $kermit->history->historyBlocksForIp($host->ip, time() - 24*60*60, 24, 60*60);
+			$ret[] = $kermit->history->historyBlocksForIp($host->ip, time() - 24*60*60, 24, 60*60);
 		endforeach;
 		return array('history' => $ret);
 	}
@@ -70,14 +70,16 @@ class History extends Kermit_Module{
 		$date1 = date('Y-m-d H:i:s', $timestamp1);
 		$date2 = date('Y-m-d H:i:s', $timestamp2);
 		$history = Doctrine_Query::create()
-			->select('	MIN(start_time) as start_time, MAX(end_time) as end_time, 
+			->select('	ip, MIN(start_time) as start_time, MAX(end_time) as end_time, 
 						SUM(up) as up, SUM(down) as down, AVG(up_avg) as up_avg, AVG(down_avg) as down_avg')
 			->from('TrafficHistory')
 			->where('ip = ?', $ip)
 			->andWhere('start_time > ? AND start_time < ?', array($date1, $date2))
 			->andWhere('end_time < ? AND end_time > ?', array($date2, $date1))
 			->orderBy('end_time ASC');
-		$ret = $history->fetchOne()->toArray();
+		
+		$ret = $history->fetchOne();
+		if($ret) return $ret->toArray();
 		return $ret;
 	}
 	
@@ -86,7 +88,8 @@ class History extends Kermit_Module{
 		for($i = 0; $i < $block_count; $i++){
 			$start = $start_time + ($i*$block_size);
 			$end = $start + $block_size;
-			$blocks[] = $this->dateRangeForIp($ip, $start, $end);
+			$block = $this->dateRangeForIp($ip, $start, $end);
+			if($block && !empty($block->ip)) $blocks[] = $block;
 		}
 		return $blocks;
 	}
@@ -130,7 +133,7 @@ class History extends Kermit_Module{
 		return $ret['down'];
 	}
 	
-	public static function data_point(){
+	public static function dataPoint(){
 		date_default_timezone_set('America/New_York');
 		// First, get list of ip addresses
 		$hosts = Doctrine::getTable('Host')->findAll();
