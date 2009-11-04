@@ -23,6 +23,6 @@ class Flex extends Kermit_Module{
 		endif;
 		
 		closedir($handle);
-		return '/files'.$maxfile;
+		return '/files/'.$maxfile;
 	}
 }

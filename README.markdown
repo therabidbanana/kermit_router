@@ -7,3 +7,8 @@ router software)
 
 This software is written as part of a research project to make 
 networking information more available to home users. 
+
+
+Setup:
+========
+WAMP server with php_curl enabled

@@ -180,10 +180,10 @@ class History extends Kermit_Module{
 		Doctrine_Query::create()
 			->delete('Traffic')
 			->execute();
-		// Delete traffic history older than new data point by seven days
+		// Delete traffic history older than new data point by 30 days
 		Doctrine_Query::create()
 			->delete('TrafficHistory')
-			->where('end_time < ?', date('Y-m-d H:i:s', ($ended - 60*60*24*7)))
+			->where('end_time < ?', date('Y-m-d H:i:s', ($ended - 60*60*24*30)))
 			->execute();
 		$ret = array();
 		// Finally, save data points
