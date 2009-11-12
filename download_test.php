@@ -1,4 +1,5 @@
 <?php
+sleep(2); // Throttle for testing.
 
 header("Content-Type: text/plain");
 srand(time());
@@ -10,7 +11,7 @@ if(isset($_GET['size']) && intval($_GET['size'] < 4096))
 
 // Seed value from get variable
 if(isset($_GET['seed'])) 
-	srand(time()+$_GET['seed']); 
+	srand(time()+intval($_GET['seed'])); 
 	
 for($i = 0; $i < (32*$file_size); $i++){
 	echo md5(rand());
