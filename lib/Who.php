@@ -7,6 +7,7 @@ class Who extends Kermit_Module{
 			$this->xmlrpc->add('who.setHostname', get_class($this), 'setHostname');
 			$this->xmlrpc->add('who.setStatus', get_class($this), 'setStatus');
 			$this->xmlrpc->add('who.setImage', get_class($this), 'setImage');
+			$this->xmlrpc->add('who.amI', get_class($this), 'amI');
 			$this->xmlrpc->add('who.getImages', get_class($this), 'getImages');
 		endif;
 	}
@@ -43,12 +44,23 @@ class Who extends Kermit_Module{
 		if(!$kerm){
 			$kerm = new KermitHost();
 			$kerm->mac = $host->mac;
+			$kerm->ip = $host->ip;
 			$kerm->name = gethostbyaddr($host->ip);
 			$kerm->status = '';
 			$kerm->allowed = 0;
 			$kerm->save();
 		}
 		return $kerm;
+	}
+	
+	public static function amI(){
+		global $kermit;
+		return $kermit->who->kermitForIp($_SERVER['REMOTE_ADDR']);
+	}
+	
+	public function kermitForIp($ip){
+		$kerm = Doctrine::getTable('KermitHost')->findOneByIp($ip);
+		return ($kerm ? $kerm->toArray() : false);
 	}
 	
 	public static function setHostname($id, $name){

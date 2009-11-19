@@ -15,14 +15,14 @@ class Speed extends Kermit_Module{
 		$file = 'download_test.php';
 		$seed  = md5(time());
 		srand(time());
-		$size = 1024 + rand(0,1024);
+		$size = 4*1024 + rand(0,1024);
 		$options = "?size=$size&seed=$seed";
 		//$temp = __KERMIT_ROOT__ . '/tmp/curl_'.$seed.'.txt';
 		
 		$ch = curl_init($url.$file.$options);
 		//$fp = fopen($temp, 'w');
-		//curl_setopt($ch, CURLOPT_FILE, $fp);
-		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+		//curl_setopt($ch, CURLOPT_FILE, $fp);    
+		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); // No need to save to temp file, use in memory instead
 		$before = microtime(true);
 		curl_exec($ch);
 		$after = microtime(true);
@@ -39,7 +39,7 @@ class Speed extends Kermit_Module{
 		$file = 'upload_test.php';
 		$seed  = time();
 		srand($seed);
-		$size = 1024 + rand(0,1024);
+		$size = 4*1024 + rand(0,1024);
 		$temp = __KERMIT_ROOT__ . '/'.'tmp'.'/'.'curl_'.$seed.'.txt';
 		
 		

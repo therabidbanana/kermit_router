@@ -46,6 +46,15 @@ class KermitHost extends Doctrine_Record
              'notnull' => true,
              'autoincrement' => false,
              ));
+		$this->hasColumn('ip', 'string', 15, array(
+             'type' => 'string',
+             'length' => 15,
+             'fixed' => false,
+             'primary' => false,
+             'default' => '',
+             'notnull' => true,
+             'autoincrement' => false,
+             ));
         $this->hasColumn('status', 'string', 1, array(
              'type' => 'string',
              'length' => 1,
