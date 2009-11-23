@@ -115,7 +115,46 @@ class AccessMod extends Kermit_Module{
 	public static function unprioritizeService($service){
 	
 	}
-	public function iptables(){
+	public function blocked(){
+		$list = $this->access_list();
+		$list = $list['access_rules'];
+		$blocks = array();
+		foreach($list as $rule):
+			if($rule['level'] == AccessMod::BLOCK) $blocks[] = $rule['ip'];
+		endforeach;
+		$script = "";
+		foreach($blocks as $blocked):
+			$host = Doctrine::getTable('Host')->findOneByIp($blocked);
+			$script .= $host->mac . "\n";
+		endforeach;
+		return $script;
+	}
+	
+	public function script(){
+		$list = $this->access_list();
+		$list = $list['access_rules'];
+		$script = "#!/bin/sh\n";
+		$throttles = array();
+		$priorities = array();
+		foreach($list as $rule):
+			if($rule['level'] == AccessMod::LOW) $throttles[] = $rule['ip'];
+			if($rule['level'] == AccessMod::HIGH) $priorities[] = $rule['ip'];
+		endforeach;
 		
+		$script .= "tc qdisc del dev br0 root\n";
+		$script .= "tc qdisc add dev br0 root handle 1: prio\n";
+		$script .= "tc qdisc add dev br0 parent 1:1 handle 10: sfq\n";
+		$script .= "tc qdisc add dev br0 parent 1:2 handle 20: sfq\n";
+		$script .= "tc qdisc add dev br0 parent 1:3 handle 30: sfq\n";
+
+		foreach($priorities as $priority):
+			$script .= "tc filter add dev br0 protocol ip parent 1: prio 1 u32 match ip src $throttle flowid 1:1\n";
+		endforeach;
+		foreach($throttles as $throttle):
+			$script .= "tc filter add dev br0 protocol ip parent 1: prio 3 u32 match ip src $throttle flowid 1:3\n";
+		endforeach;
+		
+		$script .= "tc filter add dev br0 protocol ip parent 1: prio 2 flowid 1:2\n";
+		return $script;
 	}
 }

@@ -90,7 +90,7 @@ class History extends Kermit_Module{
 			$end = $start + $block_size;
 			$block = $this->dateRangeForIp($ip, $start, $end);
 			$kerm = $this->who->kermitForIp($ip);
-			$block['hostname'] = $kerm->name;
+			$block['hostname'] = $kerm['name'];
 			if($block && !empty($block->ip)) $blocks[] = $block;
 		}
 		return $blocks;

@@ -2,4 +2,4 @@
 
 include "bootstrap.php";
 header('Content-Type: text/plain');
-echo $kermit->access->blocked();
+echo $kermit->access->script();
