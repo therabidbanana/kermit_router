@@ -1,0 +1,29 @@
+/* CSS file */
+/* http://www.w3.org/TR/2005/WD-css3-background-20050216/ */
+/* http://dbaron.org/css/css-vg/ */
+
+/* Degrafa CSS Example */
+
+Application {
+    background-color:         "-45deg #330000 #550000 #330000";
+    background-image:         Embed("assets.images/designer.png");
+    background-repeat:         repeat;
+    background-position:     center;
+    background-blend:         multiply;
+    borderSkin:             ClassReference("com.degrafa.skins.CSSSkin");
+}
+
+Panel {
+    color:                         #FFFFFF;
+    border-alpha:                 0.8;
+    border-color:                 "#002255 #002255 #001144 #001144";
+    border-width:                 "10px 30px 10px 10px";
+    border-top-right-radius:     24px;
+    border-bottom-left-radius:     24px;
+    background-image:             RETRO, KITCHEN, "-90deg #666666 60px #FFFFFF 90% #AAAAAA", GRUNGE;
+    background-repeat:             repeat, repeat-y, stretch, stretch;
+    background-position:         "top center", "top 85%", center, center;
+    background-blend:             normal, normal, multiply, multiply;
+    asset-class:                 ClassReference("assets.AssetsFile");
+    borderSkin:                 ClassReference("com.degrafa.skins.CSSSkin");
+}

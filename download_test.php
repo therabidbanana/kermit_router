@@ -1,12 +1,10 @@
 <?php
-sleep(2); // Throttle for testing.
-
 header("Content-Type: text/plain");
 srand(time());
 $file_size = 1024; // in kB
 
 // Filesize from get variable
-if(isset($_GET['size']) && intval($_GET['size'] < 8192)) 
+if(isset($_GET['size']) && intval($_GET['size'] < 1024*9)) 
 	$file_size = intval($_GET['size']); 
 
 // Seed value from get variable

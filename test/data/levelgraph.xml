@@ -1,0 +1,101 @@
+<Graph>
+  <Node id="1" name="0" desc="This is a description" nodeColor="0x333333" nodeSize="32" nodeClass="earth" nodeIcon="center" x="10" y="10" />
+  <Node id="2" name="A" desc="This is a description" nodeColor="0x8F8FFF" nodeSize="12" nodeClass="tree" nodeIcon="2" x="10" y="15" />
+  <Node id="3" name="B" desc="This is a description" nodeColor="0xF00000" nodeSize="36" nodeClass="tree" nodeIcon="3" x="10" y="20" />
+  <Node id="4" name="C" desc="This is a description" nodeColor="0x00FF00" nodeSize="10" nodeClass="tree" nodeIcon="4" x="10" y="25" />
+  <Node id="5" name="D" desc="This is a description" nodeColor="0xFFA500" nodeSize="14" nodeClass="tree" nodeIcon="5" x="10" y="30" />
+  <Node id="6" name="E" desc="This is a description" nodeColor="0x191970" nodeSize="10" nodeClass="tree" nodeIcon="6" x="10" y="35" />
+  <Node id="7" name="F" desc="This is a description" nodeColor="0x4682b4" nodeSize="18" nodeClass="tree" nodeIcon="7" x="10" y="40" />
+  
+  <Node id="8" name="A.1" desc="This is a description" nodeColor="0x8F8FFF" nodeSize="21" nodeClass="leaf" nodeIcon="10" x="20" y="20" />
+  <Node id="9" name="A.2" desc="This is a description" nodeColor="0x8F8FFF" nodeSize="15" nodeClass="leaf" nodeIcon="11" x="20" y="25" />
+  <Node id="10" name="A.3" desc="This is a description" nodeColor="0x8F8FFF" nodeSize="32" nodeClass="leaf" nodeIcon="12" x="20" y="30" />
+  <Node id="11" name="A.4" desc="This is a description" nodeColor="0x8F8FFF" nodeSize="16" nodeClass="leaf" nodeIcon="13" x="20" y="35" />
+  <Node id="12" name="A.5" desc="This is a description" nodeColor="0x8F8FFF" nodeSize="12" nodeClass="leaf" nodeIcon="14" x="20" y="40" />
+  <Node id="13" name="A.6" desc="This is a description" nodeColor="0x8F8FFF" nodeSize="10" nodeClass="leaf" nodeIcon="15" x="20" y="45" />
+  
+  <Node id="14" name="B.1" desc="This is a description" nodeColor="0xF00000" nodeSize="27" nodeClass="leaf" nodeIcon="16" x="30" y="30" />
+  <Node id="15" name="B.2" desc="This is a description" nodeColor="0xF00000" nodeSize="10" nodeClass="leaf" nodeIcon="17" x="30" y="35" />
+  <Node id="16" name="B.3" desc="This is a description" nodeColor="0xF00000" nodeSize="13" nodeClass="leaf" nodeIcon="18" x="30" y="40" />
+  <Node id="17" name="B.4" desc="This is a description" nodeColor="0xF00000" nodeSize="10" nodeClass="leaf" nodeIcon="19" x="30" y="45" />
+  <Node id="18" name="B.5" desc="This is a description" nodeColor="0xF00000" nodeSize="10" nodeClass="leaf" nodeIcon="20" x="30" y="50" />
+  <Node id="19" name="B.6" desc="This is a description" nodeColor="0xF00000" nodeSize="10" nodeClass="leaf" nodeIcon="21" x="30" y="55" />
+
+  <Node id="20" name="C.1" desc="This is a description" nodeColor="0x00FF00" nodeSize="10" nodeClass="leaf" nodeIcon="22" x="40" y="40" />
+  <Node id="21" name="C.2" desc="This is a description" nodeColor="0x00FF00" nodeSize="15" nodeClass="leaf" nodeIcon="23" x="40" y="45" />
+  <Node id="22" name="C.3" desc="This is a description" nodeColor="0x00FF00" nodeSize="10" nodeClass="leaf" nodeIcon="24" x="40" y="50" />
+  <Node id="23" name="C.4" desc="This is a description" nodeColor="0x00FF00" nodeSize="10" nodeClass="leaf" nodeIcon="25" x="40" y="55" />
+  <Node id="24" name="C.5" desc="This is a description" nodeColor="0x00FF00" nodeSize="20" nodeClass="leaf" nodeIcon="26" x="40" y="60" />
+  <Node id="25" name="C.6" desc="This is a description" nodeColor="0x00FF00" nodeSize="10" nodeClass="leaf" nodeIcon="27" x="40" y="65" />
+
+  <Node id="26" name="D.1" desc="This is a description" nodeColor="0xFFA500" nodeSize="30" nodeClass="leaf" nodeIcon="28" x="50" y="50" />
+  <Node id="27" name="D.2" desc="This is a description" nodeColor="0xFFA500" nodeSize="10" nodeClass="leaf" nodeIcon="29" x="50" y="55" />
+  <Node id="28" name="D.3" desc="This is a description" nodeColor="0xFFA500" nodeSize="12" nodeClass="leaf" nodeIcon="30" x="50" y="60" />
+  <Node id="29" name="D.4" desc="This is a description" nodeColor="0xFFA500" nodeSize="10" nodeClass="leaf" nodeIcon="31" x="50" y="65" />
+  <Node id="30" name="D.5" desc="This is a description" nodeColor="0xFFA500" nodeSize="10" nodeClass="leaf" nodeIcon="32" x="50" y="70" />
+  <Node id="31" name="D.6" desc="This is a description" nodeColor="0xFFA500" nodeSize="15" nodeClass="leaf" nodeIcon="33" x="50" y="75" />
+
+  <Node id="32" name="E.1" desc="This is a description" nodeColor="0x191970" nodeSize="26" nodeClass="leaf" nodeIcon="34" x="60" y="60" />
+  <Node id="33" name="E.2" desc="This is a description" nodeColor="0x191970" nodeSize="10" nodeClass="leaf" nodeIcon="35" x="60" y="65" />
+  <Node id="34" name="E.3" desc="This is a description" nodeColor="0x191970" nodeSize="16" nodeClass="leaf" nodeIcon="36" x="60" y="70" />
+  <Node id="35" name="E.4" desc="This is a description" nodeColor="0x191970" nodeSize="10" nodeClass="leaf" nodeIcon="37" x="60" y="75" />
+  <Node id="36" name="E.5" desc="This is a description" nodeColor="0x191970" nodeSize="10" nodeClass="leaf" nodeIcon="38" x="60" y="80" />
+  <Node id="37" name="E.6" desc="This is a description" nodeColor="0x191970" nodeSize="14" nodeClass="leaf" nodeIcon="39" x="60" y="85" />
+
+  <Node id="38" name="F.1" desc="This is a description" nodeColor="0x4682b4" nodeSize="5" nodeClass="leaf" nodeIcon="40" x="70" y="70" />
+  <Node id="39" name="F.2" desc="This is a description" nodeColor="0x4682b4" nodeSize="12" nodeClass="leaf" nodeIcon="41" x="70" y="75" />
+  <Node id="40" name="F.3" desc="This is a description" nodeColor="0x4682b4" nodeSize="10" nodeClass="leaf" nodeIcon="42" x="70" y="80" />
+  <Node id="41" name="F.4" desc="This is a description" nodeColor="0x4682b4" nodeSize="22" nodeClass="leaf" nodeIcon="43" x="70" y="85" />
+  <Node id="42" name="F.5" desc="This is a description" nodeColor="0x4682b4" nodeSize="8" nodeClass="leaf" nodeIcon="44" x="70" y="90" />
+  <Node id="43" name="F.6" desc="This is a description" nodeColor="0x4682b4" nodeSize="10" nodeClass="leaf" nodeIcon="45" x="70" y="95" />
+  
+  <Edge fromID="1" toID="2" edgeLabel="...is friend of..." color="0x8F8FFF" flow="50"  />
+  <Edge fromID="1" toID="3" edgeLabel="...is peer of..." color="0xF00000" flow="400"  />
+  <Edge fromID="1" toID="4" edgeLabel="...is acquaintance to..." color="0x00FF00" flow="80"  />
+  <Edge fromID="1" toID="5" edgeLabel="...is acquaintance to..." color="0xFFA500" flow="100"  />
+  <Edge fromID="1" toID="6" edgeLabel="...is friend of..." color="0x191970" flow="120"  />
+  <Edge fromID="1" toID="7" edgeLabel="...is peer of..." flow="150" color="0x4682b4"  />
+  
+  <Edge fromID="2" toID="8" edgeLabel="...is acquaintance to..." flow="100"   />
+  <Edge fromID="2" toID="9" edgeLabel="...is peer of..." flow="400"   />
+  <Edge fromID="2" toID="10" edgeLabel="...is friend of..." flow="800"   />
+  <Edge fromID="2" toID="11" edgeLabel="...is acquaintance to..." flow="100"   />
+  <Edge fromID="2" toID="12" edgeLabel="...is peer of..." flow="120"   />
+  <Edge fromID="2" toID="13" edgeLabel="...is friend of..." flow="150"   />
+
+  <Edge fromID="3" toID="14" edgeLabel="...is acquaintance to..." flow="1"   />
+  <Edge fromID="3" toID="15" edgeLabel="...is friend of..." flow="40"   />
+  <Edge fromID="3" toID="16" edgeLabel="...is peer of..." flow="80"   />
+  <Edge fromID="3" toID="17" edgeLabel="...is acquaintance to..." flow="100"   />
+  <Edge fromID="3" toID="18" edgeLabel="...is acquaintance to..." flow="120"   />
+  <Edge fromID="3" toID="19" edgeLabel="...is peer of..." flow="15"   />
+
+  <Edge fromID="4" toID="20" edgeLabel="...is peer of..." flow="1"   />
+  <Edge fromID="4" toID="21" edgeLabel="...is acquaintance to..." flow="40"   />
+  <Edge fromID="4" toID="22" edgeLabel="...is friend of..." flow="8"   />
+  <Edge fromID="4" toID="23" edgeLabel="...is acquaintance to..." flow="100"   />
+  <Edge fromID="4" toID="24" edgeLabel="...is acquaintance to..." flow="120"   />
+  <Edge fromID="4" toID="25" edgeLabel="...is peer of..." flow="150"   />
+
+  <Edge fromID="5" toID="26" edgeLabel="...is peer of..." flow="1"   />
+  <Edge fromID="5" toID="27" edgeLabel="...is acquaintance to..." flow="400"   />
+  <Edge fromID="5" toID="28" edgeLabel="...is friend of..." flow="8"   />
+  <Edge fromID="5" toID="29" edgeLabel="...is acquaintance to..." flow="100"   />
+  <Edge fromID="5" toID="30" edgeLabel="...is peer of..." flow="120"   />
+  <Edge fromID="5" toID="31" edgeLabel="...is friend of..." flow="150"   />
+
+  <Edge fromID="6" toID="32" edgeLabel="...is friend of..." flow="1"   />
+  <Edge fromID="6" toID="33" edgeLabel="...is acquaintance to..." flow="40"   />
+  <Edge fromID="6" toID="34" edgeLabel="...is peer of..." flow="800"   />
+  <Edge fromID="6" toID="35" edgeLabel="...is acquaintance to..." flow="100"   />
+  <Edge fromID="6" toID="36" edgeLabel="...is acquaintance to..." flow="12"   />
+  <Edge fromID="6" toID="37" edgeLabel="...is friend of..." flow="150"   />
+
+  <Edge fromID="7" toID="38" edgeLabel="...is peer of..." flow="100"   />
+  <Edge fromID="7" toID="39" edgeLabel="...is acquaintance to..." flow="40"   />
+  <Edge fromID="7" toID="40" edgeLabel="...is friend of..." flow="80"   />
+  <Edge fromID="7" toID="41" edgeLabel="...is acquaintance to..." flow="1000"   />
+  <Edge fromID="7" toID="42" edgeLabel="...is acquaintance to..." flow="120"   />
+  <Edge fromID="7" toID="43" edgeLabel="...is peer of..." flow="150"   />
+  
+</Graph>

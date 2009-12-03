@@ -17,17 +17,20 @@ class History extends Kermit_Module{
 	}
 	
 	public static function history_list(){
+		global $kermit;
 		$hosts = Doctrine::getTable('Host')->findAll();
 		$ret = array();
 		foreach($hosts as $host):
-			$history = Doctrine_Query::create()
-				->from('TrafficHistory')
-				->where('ip = ?', $host->ip)
-				->orderBy('end_time ASC')
-				->execute();
-			$ret[$host->ip] = $history->toArray();
+			//$history = Doctrine_Query::create()
+			//	->from('TrafficHistory')
+			//	->where('ip = ?', $host->ip)
+			//	->orderBy('end_time ASC')
+			//	->execute();
+			//$ret[$host->ip] = $history->toArray();
 		endforeach;
-		return array('history' => $ret);
+		$ret = array('history' => $ret);
+		// $kermit->xmlrpc->log('history.list', 'Listing history', array());
+		return $ret;
 	}
 	
 	public static function lastTen(){
@@ -37,6 +40,7 @@ class History extends Kermit_Module{
 		foreach($hosts as $host):
 			$ret[] = $kermit->history->historyBlocksForIp($host->ip, time() - 10*60, 5);
 		endforeach;
+		$kermit->xmlrpc->log('history.lastTen', 'Listing history for last ten minutes', array('history' => $ret));
 		return array('history' => $ret);
 	}
 	
@@ -49,6 +53,8 @@ class History extends Kermit_Module{
 		foreach($hosts as $host):
 			$ret[] = $kermit->history->historyBlocksForIp($host->ip, time() - 60*60, 12, 5*60);
 		endforeach;
+		
+		$kermit->xmlrpc->log('history.lastHour', 'Listing history for last hour', array('history' => $ret));
 		return array('history' => $ret);
 	}
 	
@@ -59,6 +65,7 @@ class History extends Kermit_Module{
 		foreach($hosts as $host):
 			$ret[] = $kermit->history->historyBlocksForIp($host->ip, time() - 24*60*60, 24, 60*60);
 		endforeach;
+		$kermit->xmlrpc->log('history.lastDay', 'Listing history for last day', array('history' => $ret));
 		return array('history' => $ret);
 	}
 	
@@ -91,9 +98,25 @@ class History extends Kermit_Module{
 			$block = $this->dateRangeForIp($ip, $start, $end);
 			$kerm = $this->who->kermitForIp($ip);
 			$block['hostname'] = $kerm['name'];
+			$block['up'] = $block['up'] / (1024 * 1024);
+			$block['down'] = $block['down'] / (1024 * 1024);
+			$block['up_avg'] = $block['up_avg'] / (1024 * 1024);
+			$block['down_avg'] = $block['down_avg'] / (1024 * 1024);
 			if($block && !empty($block->ip)) $blocks[] = $block;
 		}
 		return $blocks;
+	}
+	
+	public function lastStatsForIp($ip){
+		$ret = Doctrine_Query::create()
+			->select('up, up_avg, down, down_avg')
+			->from('TrafficHistory')
+			->orderBy('end_time DESC')
+			->where('ip = ?', $ip)
+			->limit(1)
+			->setHydrationMode(Doctrine::HYDRATE_ARRAY)
+			->fetchOne();
+		return $ret;
 	}
 	
 	public function lastUpForIp($ip){
@@ -102,6 +125,7 @@ class History extends Kermit_Module{
 			->orderBy('end_time DESC')
 			->where('ip = ?', $ip)
 			->limit(1)
+			->setHydrationMode(Doctrine::HYDRATE_ARRAY)
 			->fetchOne();
 		return $ret['up'];
 	}
@@ -111,6 +135,7 @@ class History extends Kermit_Module{
 			->orderBy('end_time DESC')
 			->where('ip = ?', $ip)
 			->limit(1)
+			->setHydrationMode(Doctrine::HYDRATE_ARRAY)
 			->fetchOne();
 		return $ret['up_avg'];
 	}
@@ -121,6 +146,7 @@ class History extends Kermit_Module{
 			->orderBy('end_time DESC')
 			->where('ip = ?', $ip)
 			->limit(1)
+			->setHydrationMode(Doctrine::HYDRATE_ARRAY)
 			->fetchOne();
 		return $ret['down_avg'];
 	}
@@ -131,11 +157,13 @@ class History extends Kermit_Module{
 			->orderBy('end_time DESC')
 			->where('ip = ?', $ip)
 			->limit(1)
+			->setHydrationMode(Doctrine::HYDRATE_ARRAY)
 			->fetchOne();
 		return $ret['down'];
 	}
 	
 	public static function dataPoint(){
+		global $kermit;
 		date_default_timezone_set('America/New_York');
 		// First, get list of ip addresses
 		$hosts = Doctrine::getTable('Host')->findAll();
@@ -143,22 +171,7 @@ class History extends Kermit_Module{
 		foreach($hosts as $host):
 			$ips[$host->ip] = array();
 		endforeach;
-		// Next, pull out the data for each ip
-		foreach($ips as $ip => $stuff):
-			$ip_ups = Doctrine_Query::create()
-				->select('SUM(bytes) as bytes')
-				->from('Traffic')
-				->where('srcip = ?', $ip)
-				->execute();
-			$ip_downs = Doctrine_Query::create()
-				->select('SUM(bytes) as bytes')
-				->from('Traffic')
-				->where('dstip = ?', $ip)
-				->execute();
-			$ips[$ip]['up'] = $ip_ups[0]['bytes'];
-			$ips[$ip]['down'] = $ip_downs[0]['bytes'];
-			
-		endforeach;
+		
 		// Find the last data_point date
 		$q = Doctrine_Query::create()
 			->from('TrafficHistory')
@@ -176,12 +189,34 @@ class History extends Kermit_Module{
 		else:
 			$started = strtotime($date->end_time);
 		endif;
+		
+		$cut_date = date('Y-m-d', $started);
+		$cut_time = date('H:i:s', $started);
+		// Next, pull out the data for each ip
+		foreach($ips as $ip => $stuff):
+			$ip_ups = Doctrine_Query::create()
+				->select('SUM(bytes) as bytes')
+				->from('Traffic')
+				->where('srcip = ?', $ip)
+				->andWhere('(date > ?) OR (date = ? AND time > ?)', array($cut_date, $cut_date, $cut_time))
+				->execute();
+			$ip_downs = Doctrine_Query::create()
+				->select('SUM(bytes) as bytes')
+				->from('Traffic')
+				->where('dstip = ?', $ip)
+				->andWhere('(date > ?) OR (date = ? AND time > ?)', array($cut_date, $cut_date, $cut_time))
+				->execute();
+			$ips[$ip]['up'] = $ip_ups[0]['bytes'];
+			$ips[$ip]['down'] = $ip_downs[0]['bytes'];
+			
+		endforeach;
+		
 		$ended = time();
 		
 		// Wipe the traffic table
-		Doctrine_Query::create()
-			->delete('Traffic')
-			->execute();
+		//Doctrine_Query::create()
+		//	->delete('Traffic')
+		//	->execute();
 		// Delete traffic history older than new data point by 30 days
 		Doctrine_Query::create()
 			->delete('TrafficHistory')
@@ -202,6 +237,8 @@ class History extends Kermit_Module{
 			$traff->save();
 			$ret[$traff->ip] = $traff->toArray(); 
 		endforeach;
+		
+		$kermit->xmlrpc->log('history.dataPoint', 'Creating a new data point', array('message' => 'data saved', 'history' => $ret));
 		return array('message' => 'data saved', 'history' => $ret);
 	}
 	

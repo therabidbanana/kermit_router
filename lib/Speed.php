@@ -11,11 +11,11 @@ class Speed extends Kermit_Module{
 	}
 	
 	public function downloadSpeed(){
-		$url = 'http://kermit.local/';
+		$url = 'http://davidhaslem.com/kermit/';
 		$file = 'download_test.php';
 		$seed  = md5(time());
 		srand(time());
-		$size = 4*1024 + rand(0,1024);
+		$size = 7*1024 + rand(0,1024);
 		$options = "?size=$size&seed=$seed";
 		//$temp = __KERMIT_ROOT__ . '/tmp/curl_'.$seed.'.txt';
 		
@@ -35,7 +35,7 @@ class Speed extends Kermit_Module{
 	}
 	
 	public function uploadSpeed(){
-		$url = 'http://kermit.local/';
+		$url = 'http://davidhaslem.com/kermit/';
 		$file = 'upload_test.php';
 		$seed  = time();
 		srand($seed);

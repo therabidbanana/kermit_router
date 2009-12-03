@@ -27,6 +27,17 @@ class Xmlrpc extends Kermit_Module{
 		$s->functions_parameters_type = 'phpvals';
 		$s->service();
 	}
+	
+	function log($call, $message, $ret = array(), $args = array()){
+		$log = new Log();
+		$log->call = $call;
+		$log->message = $message;
+		$log->ret = print_r($ret, TRUE);
+		$log->args = print_r($args, TRUE);
+		$log->save();
+		return true;
+	}
+	
 	function test_func($something){
 		return array('something' => $something);
 	}
