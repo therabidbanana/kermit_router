@@ -38,7 +38,7 @@ class Who extends Kermit_Module{
 			endif;
 		endforeach;
 		
-		$kermit->xmlrpc->log('who.list', 'Listing clients', $ret);
+		//$kermit->xmlrpc->log('who.list', 'Listing clients', $ret);
 		return $ret;
 	}
 	
