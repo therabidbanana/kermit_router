@@ -1,0 +1,15 @@
+vendor:
+  - Doctrine
+  - xmlrpc_lib
+kermit:
+  Database: db
+  Xmlrpc: xmlrpc
+<<<<<<< HEAD
+  Who: who
+  History: history
+  Flex: flex
+  Speed: speed
+  AccessMod: access
+=======
+  History: history
+>>>>>>> 60254ca81d9ad0565dc02b1d647c48cb30a4d91a
