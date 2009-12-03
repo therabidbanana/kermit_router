@@ -7,7 +7,8 @@
 	<p>Executing...</p>
 	<?php 
 		include_once('bootstrap.php');
-		History::dataPoint(); 
+		History::dataPoint(false); 
+		if(intval(date('i')) == 0 || intval(date('i')) == 30) Speed::upAndDown(false);
 	?>
 </body>
 </html>

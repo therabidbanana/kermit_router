@@ -7,6 +7,8 @@ class Speed extends Kermit_Module{
 			$this->xmlrpc->add('speed.upload', get_class($this), 'upload');
 			$this->xmlrpc->add('speed.downloadMbps', get_class($this), 'downloadMbps');
 			$this->xmlrpc->add('speed.uploadMbps', get_class($this), 'uploadMbps');
+			$this->xmlrpc->add('speed.upAndDown', get_class($this), 'upAndDown');
+			$this->xmlrpc->add('speed.history', get_class($this), 'history');
 		endif;
 	}
 	
@@ -15,6 +17,7 @@ class Speed extends Kermit_Module{
 		$file = 'download_test.php';
 		$seed  = md5(time());
 		srand(time());
+		// size in kB
 		$size = 7*1024 + rand(0,1024);
 		$options = "?size=$size&seed=$seed";
 		//$temp = __KERMIT_ROOT__ . '/tmp/curl_'.$seed.'.txt';
@@ -80,6 +83,35 @@ class Speed extends Kermit_Module{
 		global $kermit;
 		$avg = $kermit->speed->downloadSpeed();
 		return ($avg / (1024*1024)) * 8; // In Mbps
+	}
+	
+	// Returns a megabit per second count
+	public static function upAndDown($log = true){
+		global $kermit;
+		$avg = $kermit->speed->uploadSpeed();
+		$up = ($avg / (1024*1024)) * 8;
+		
+		$avg = $kermit->speed->downloadSpeed();
+		$down = ($avg / (1024*1024)) * 8;
+		
+		$ret = array('up' => $up, 'down' => $down); // In Mbps
+		if($log) $kermit->xmlrpc->log('speed.upAndDown', "Speed up/down: ( $up / $down ) mbps", $ret);
+		$sl = new SpeedLog();
+		$sl->up_mbps = $up;
+		$sl->down_mbps = $down;
+		$sl->save();
+		return $ret;
+	}
+	
+	public static function history(){
+		global $kermit;
+		$q = Doctrine_Query::create()
+			 ->from('SpeedLog')
+			 ->orderBy('created_at ASC')
+			 ->execute();
+		$history = $q->toArray();
+		$kermit->xmlrpc->log('speed.history', "Getting speed history", $history);
+		return array('history' => $history);
 	}
 	
 	// Returns a bytes per second count

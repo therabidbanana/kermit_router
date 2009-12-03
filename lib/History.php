@@ -162,7 +162,7 @@ class History extends Kermit_Module{
 		return $ret['down'];
 	}
 	
-	public static function dataPoint(){
+	public static function dataPoint($log = true){
 		global $kermit;
 		date_default_timezone_set('America/New_York');
 		// First, get list of ip addresses
@@ -238,7 +238,7 @@ class History extends Kermit_Module{
 			$ret[$traff->ip] = $traff->toArray(); 
 		endforeach;
 		
-		$kermit->xmlrpc->log('history.dataPoint', 'Creating a new data point', array('message' => 'data saved', 'history' => $ret));
+		if($log) $kermit->xmlrpc->log('history.dataPoint', 'Creating a new data point', array('message' => 'data saved', 'history' => $ret));
 		return array('message' => 'data saved', 'history' => $ret);
 	}
 	
