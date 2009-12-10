@@ -88,10 +88,20 @@ class Speed extends Kermit_Module{
 	// Returns a megabit per second count
 	public static function upAndDown($log = true){
 		global $kermit;
-		$avg = $kermit->speed->uploadSpeed();
+		try{
+			$avg = $kermit->speed->uploadSpeed();
+		}
+		catch(Exception $e){
+			$avg = 100000;
+		}
 		$up = ($avg / (1024*1024)) * 8;
 		
-		$avg = $kermit->speed->downloadSpeed();
+		try{
+			$avg = $kermit->speed->downloadSpeed();
+		}
+		catch(Exception $e){
+			$avg = 100000;
+		}
 		$down = ($avg / (1024*1024)) * 8;
 		
 		$ret = array('up' => $up, 'down' => $down); // In Mbps

@@ -6,8 +6,9 @@
 
 	    <cross-domain-policy>
 		
-
+  		<site-control permitted-cross-domain-policies="all"/>
 	    <allow-access-from domain="*" secure="false" to-ports="*"/>
-		<allow-http-request-headers-from domain="*" headers="*" />
+	    <allow-http-request-headers-from domain="*" headers="*"/>
+		
 
 	    </cross-domain-policy> 

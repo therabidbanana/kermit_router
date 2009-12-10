@@ -2926,6 +2926,7 @@ xmlrpc_encode_entitites($this->errstr, $GLOBALS['xmlrpc_internalencoding'], $cha
 		function serializedata($typ, $val, $charset_encoding='')
 		{
 			$rs='';
+			if(is_null($typ)) return $rs;
 			switch(@$GLOBALS['xmlrpcTypes'][$typ])
 			{
 				case 1:

@@ -96,12 +96,20 @@ class History extends Kermit_Module{
 			$start = $start_time + ($i*$block_size);
 			$end = $start + $block_size;
 			$block = $this->dateRangeForIp($ip, $start, $end);
+			if(!$block || !isset($block['up'])){
+				$block['up'] = 0;
+				$block['down'] =0;
+				$block['up_avg'] = 0;
+				$block['down_avg'] = 0;
+			}
+			else{
 			$kerm = $this->who->kermitForIp($ip);
 			$block['hostname'] = $kerm['name'];
 			$block['up'] = $block['up'] / (1024 * 1024);
 			$block['down'] = $block['down'] / (1024 * 1024);
 			$block['up_avg'] = $block['up_avg'] / (1024 * 1024);
 			$block['down_avg'] = $block['down_avg'] / (1024 * 1024);
+			}
 			if($block && !empty($block->ip)) $blocks[] = $block;
 		}
 		return $blocks;

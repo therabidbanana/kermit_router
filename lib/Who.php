@@ -23,10 +23,10 @@ class Who extends Kermit_Module{
 			
 			$kerm = $kermit->who->kermitForHost($host);
 			$stats = $kermit->history->lastStatsForIp($host->ip);
-			$host_up = $stats['up'];
-			$host_down = $stats['down'];
-			$host_up_avg = $stats['up_avg'];
-			$host_down_avg = $stats['down_avg'];
+			$host_up = $stats['up'] ? $stats['up'] : '0' ;
+			$host_down = $stats['down'] ? $stats['down']: '0';
+			$host_up_avg = $stats['up_avg'] ? $stats['up_avg']: '0';
+			$host_down_avg = $stats['down_avg'] ? $stats['down_avg']: '0';
 			
 			if(($host->status && !$kerm->allowed) || $kerm->allowed):
 				$ret['hosts'][] = array('ip' => $host->ip, 'recent_activity' => $host->status, 
