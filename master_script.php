@@ -1,9 +1,11 @@
+<?php
+
+include "bootstrap.php";
+header('Content-Type: text/plain');
+?>
 #!/bin/sh
 rm /tmp/blocked_list.txt
-rm /tmp/throttled
 wget -q -O /tmp/blocked_list.txt http://192.168.1.10/blocked.php
-wget -q -O /tmp/throttled http://192.168.1.10/thottle_script.php
-`sh /tmp/throttled`
 module_exists=`lsmod | grep ipt_mac`
 if [ -z "$module_exists" ];then
     insmod ipt_mac
@@ -17,3 +19,5 @@ done
 for mac in `cat /tmp/blocked_list.txt`;do
     iptables -I FORWARD -p tcp -m mac --mac-source $mac -j REJECT --reject-with tcp-reset
 done
+<?php
+echo $kermit->access->script();
