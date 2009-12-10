@@ -5,6 +5,8 @@ class AccessMod extends Kermit_Module{
 	const LOW = 1;
 	const NORMAL = 2;
 	const HIGH = 3;
+	const CONTROLLER_IP = "192.168.1.10";
+	
 	public function whenReady($module){
 		if($module == 'xmlrpc'):
 			$this->xmlrpc->add('access.list', get_class($this), 'access_list');
@@ -18,39 +20,49 @@ class AccessMod extends Kermit_Module{
 	}
 	
 	public static function access_list(){
+		global $kermit;
 		$all = Doctrine_Query::create()
 			->from('Access')
 			->setHydrationMode(Doctrine::HYDRATE_ARRAY)
 			->execute();
+			
+		$kermit->xmlrpc->log('access.list', 'Listing access rules', array('access_rules' => $all));
 		return array('access_rules' => $all);
 	}
 	
 	public static function blockIp($ip){
+		global $kermit;
+		if(AccessMod::CONTROLLER_IP == $ip) return array('message' => "Can't alter kermit's connection");
 		// Delete all previous rules for IP		
 		$q = Doctrine_Query::create()
 			->delete('Access')
 			->where('ip = ?', $ip);
 		$q->execute();
-		
 		// Create new rule.
 		$a = new Access();
 		$a->ip = $ip;
 		$a->level = AccessMod::BLOCK;
 		$a->is_host = true;
 		$a->save();
+		$kermit->xmlrpc->log('access.blockIp', 'Blocking ip '.$ip, array('message' => "$ip was blocked"), array('ip' => $ip));
 		return array('message' => "$ip was blocked");
 	}
 	
 	public static function unblockIp($ip){
+		global $kermit;
+		if(AccessMod::CONTROLLER_IP == $ip) return array('message' => "Can't alter kermit's connection");
 		// Delete all previous rules for IP		
 		$q = Doctrine_Query::create()
 			->delete('Access')
 			->where('ip = ?', $ip);
 		$q->execute();
+		$kermit->xmlrpc->log('access.unblockIp', 'Unblocking ip '.$ip, array('message' => "$ip was unblocked"), array('ip' => $ip));
 		return array('message' => "$ip was unblocked");
 	}
 	
 	public static function throttleIp($ip){
+		global $kermit;
+		if(AccessMod::CONTROLLER_IP == $ip) return array('message' => "Can't alter kermit's connection");
 		// Delete all previous rules for IP		
 		$q = Doctrine_Query::create()
 			->delete('Access')
@@ -63,15 +75,19 @@ class AccessMod extends Kermit_Module{
 		$a->level = AccessMod::LOW;
 		$a->is_host = true;
 		$a->save();
+		$kermit->xmlrpc->log('access.throttleIp', 'Throttling ip '.$ip, array('message' => "$ip was throttled"), array('ip' => $ip));
 		return array('message' => "$ip was throttled");
 	}
 	
 	public static function unthrottleIp($ip){
+		global $kermit;
+		if(AccessMod::CONTROLLER_IP == $ip) return array('message' => "Can't alter kermit's connection");
 		// Delete all previous rules for IP		
 		$q = Doctrine_Query::create()
 			->delete('Access')
 			->where('ip = ?', $ip);
 		$q->execute();
+		$kermit->xmlrpc->log('access.unthrottleIp', 'Unthrottling ip '.$ip, array('message' => "$ip was unthrottled"), array('ip' => $ip));
 		return array('message' => "$ip was unthrottled");
 	}
 	
@@ -84,6 +100,8 @@ class AccessMod extends Kermit_Module{
 	}
 	
 	public static function prioritizeIp($ip){
+		global $kermit;
+		if(AccessMod::CONTROLLER_IP == $ip) return array('message' => "Can't alter kermit's connection");
 		// Delete all previous rules for IP		
 		$q = Doctrine_Query::create()
 			->delete('Access')
@@ -96,15 +114,19 @@ class AccessMod extends Kermit_Module{
 		$a->level = AccessMod::HIGH;
 		$a->is_host = true;
 		$a->save();
+		$kermit->xmlrpc->log('access.prioritizeIp', 'Prioritizing ip '.$ip, array('message' => "$ip was prioritized"), array('ip' => $ip));
 		return array('message' => "$ip was prioritized");
 	}
 	
 	public static function unprioritizeIp($ip){
+		global $kermit;
+		if(AccessMod::CONTROLLER_IP == $ip) return array('message' => "Can't alter kermit's connection");
 		// Delete all previous rules for IP		
 		$q = Doctrine_Query::create()
 			->delete('Access')
 			->where('ip = ?', $ip);
 		$q->execute();
+		$kermit->xmlrpc->log('access.unprioritizeIp', 'Unprioritizing ip '.$ip, array('message' => "$ip was unprioritized"), array('ip' => $ip));
 		return array('message' => "$ip was unprioritized");
 	}
 	
