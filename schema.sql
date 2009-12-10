@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 03, 2009 at 05:11 PM
+-- Generation Time: Dec 10, 2009 at 06:09 PM
 -- Server version: 5.1.36
 -- PHP Version: 5.3.0
 
@@ -103,6 +103,20 @@ CREATE TABLE IF NOT EXISTS `log` (
   `args` varchar(255) DEFAULT NULL,
   `message` varchar(255) DEFAULT NULL,
   `xmlrpc_return` text,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `speed`
+--
+
+CREATE TABLE IF NOT EXISTS `speed` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `up_mbps` float NOT NULL,
+  `down_mbps` float NOT NULL,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
 
