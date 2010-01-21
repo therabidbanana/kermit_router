@@ -11,6 +11,7 @@ class AccessMod extends Kermit_Module{
 		if($module == 'xmlrpc'):
 			$this->xmlrpc->add('access.list', get_class($this), 'access_list');
 			$this->xmlrpc->add('access.blockIp', get_class($this), 'blockIp');
+			$this->xmlrpc->add('access.statusForIp', get_class($this), 'statusForIp');
 			$this->xmlrpc->add('access.unblockIp', get_class($this), 'unblockIp');
 			$this->xmlrpc->add('access.throttleIp', get_class($this), 'throttleIp');
 			$this->xmlrpc->add('access.unthrottleIp', get_class($this), 'unthrottleIp');
@@ -28,6 +29,16 @@ class AccessMod extends Kermit_Module{
 			
 		$kermit->xmlrpc->log('access.list', 'Listing access rules', array('access_rules' => $all));
 		return array('access_rules' => $all);
+	}
+	
+	public static function statusForIp($ip){
+		$q = Doctrine_Query::create()
+			->from('Access')
+			->setHydrationMode(Doctrine::HYDRATE_ARRAY)
+			->where('ip = ?', $ip)
+			->fetchOne();
+		if($q) return $q['level'];
+		else return AccessMod::NORMAL;
 	}
 	
 	public static function blockIp($ip){

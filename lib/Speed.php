@@ -24,7 +24,9 @@ class Speed extends Kermit_Module{
 		
 		$ch = curl_init($url.$file.$options);
 		//$fp = fopen($temp, 'w');
-		//curl_setopt($ch, CURLOPT_FILE, $fp);    
+		//curl_setopt($ch, CURLOPT_FILE, $fp);
+		set_time_limit(190);
+		curl_setopt($ch,CURLOPT_TIMEOUT, 180); // Set timeout. Don't want to go more than three minutes.
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); // No need to save to temp file, use in memory instead
 		$before = microtime(true);
 		curl_exec($ch);
@@ -42,7 +44,7 @@ class Speed extends Kermit_Module{
 		$file = 'upload_test.php';
 		$seed  = time();
 		srand($seed);
-		$size = 4*1024 + rand(0,1024);
+		$size = 2*1024 + rand(0,1024);
 		$temp = __KERMIT_ROOT__ . '/'.'tmp'.'/'.'curl_'.$seed.'.txt';
 		
 		
@@ -54,10 +56,11 @@ class Speed extends Kermit_Module{
 			fwrite($fp, md5(rand()));
 		}
 		fclose($fp);
-		
+		set_time_limit(190);
 		$data = array('file' => '@'.$temp);
 		curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 		curl_setopt($ch, CURLOPT_POST, 1);
+		curl_setopt($ch,CURLOPT_TIMEOUT, 180); // Set timeout. Don't want to go more than three minutes.
 		curl_setopt($ch, CURLOPT_POSTFIELDS, $data);
 		$before = microtime(true);
 		curl_exec($ch);

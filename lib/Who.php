@@ -23,6 +23,7 @@ class Who extends Kermit_Module{
 			
 			$kerm = $kermit->who->kermitForHost($host);
 			$stats = $kermit->history->lastStatsForIp($host->ip);
+			$access = $kermit->access->statusForIp($host->ip);
 			$host_up = $stats['up'] ? $stats['up'] : '0' ;
 			$host_down = $stats['down'] ? $stats['down']: '0';
 			$host_up_avg = $stats['up_avg'] ? $stats['up_avg']: '0';
@@ -33,7 +34,7 @@ class Who extends Kermit_Module{
 										'status' => $kerm->status,
 										'wireless' => !$wired, 'hostname' => $kerm->name, 'recognized' => $kerm->allowed,
 										'id' => $kerm->id, 'up' => $host_up, 'down' => $host_down,
-										'up_avg' => $host_up_avg, 'down_avg' => $host_down_avg,
+										'up_avg' => $host_up_avg, 'down_avg' => $host_down_avg, 'access' => $access,
 										'image' => $kerm->image);
 			endif;
 		endforeach;
