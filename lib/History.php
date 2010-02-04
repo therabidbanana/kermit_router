@@ -13,6 +13,7 @@ class History extends Kermit_Module{
 			$this->xmlrpc->add('history.lastHour', get_class($this), 'lastHour');
 			$this->xmlrpc->add('history.lastDay', get_class($this), 'lastDay');
 			$this->xmlrpc->add('history.dataPoint', get_class($this), 'dataPoint');
+			$this->xmlrpc->add('history.lastDataPoint', get_class($this), 'lastDataPoint');
 		endif;
 	}
 	
@@ -253,4 +254,19 @@ class History extends Kermit_Module{
 		return array('message' => 'data saved', 'history' => $ret);
 	}
 	
+	public static function lastDataPoint(){
+		global $kermit;
+		date_default_timezone_set('America/New_York');
+		$x = Doctrine_Query::create()
+			->from('TrafficHistory')
+			->orderBy('end_time DESC')			
+			->fetchOne();
+		if(!$x) return array('message' => 'No data points available', 'error' => 1);
+		$y = strtotime($x->end_time);
+		$z = time();
+		if($z - $y > 90) $ret = array('message' => 'Data point is too old by '.($z - $y - 60).' seconds', 'error' => 1);
+		else $ret = array('message' => 'Data point taken at valid time '.$x->end_time, 'error' => 0);
+		$kermit->xmlrpc->log('history.lastDataPoint', 'Checking data point', $ret);
+		return $ret;
+	}
 }
