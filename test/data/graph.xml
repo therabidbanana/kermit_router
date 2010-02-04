@@ -1,8 +1,0 @@
-<Graph>
-  <Node id="1" name="MARSH" desc="This is a description" nodeColor="0x333333" nodeSize="50" nodeClass="earth" imgURL="assets.images/internet.png" nodeIcon="url://users/marshini/Documents/Flex Builder 3/Kermit_FE/src/images/MARSH.JPG" x="10" y="10" />
-  <Node id="2" name="MARSH" desc="This is a description" nodeColor="0x333333" nodeSize="50" nodeClass="earth" imgURL="../images/MARSH.jpg" nodeIcon="url://users/marshini/Documents/Flex Builder 3/Kermit_FE/src/images/MARSH.JPG" x="10" y="10" />
-  <Node id="3" name="MARSH" desc="This is a description" nodeColor="0x333333" nodeSize="50	" nodeClass="earth" imgURL="../images/MARSH.jpg" nodeIcon="url://users/marshini/Documents/Flex Builder 3/Kermit_FE/src/images/MARSH.JPG" x="10" y="10" />
- 
-  <Edge fromID="1" toID="2" edgeLabel="No Change" flow="40" thickness="20" color="0xcccccc" edgeClass="sun" edgeIcon="NoChange" />
-  <Edge fromID="1" toID="3" edgeLabel="Bad" flow="400" thickness="10" color="0xcccccc" edgeClass="sun" edgeIcon="Bad" />
- </Graph>

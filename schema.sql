@@ -3,11 +3,17 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 10, 2009 at 06:09 PM
+-- Generation Time: Feb 04, 2010 at 03:59 PM
 -- Server version: 5.1.36
 -- PHP Version: 5.3.0
 
 SET SQL_MODE="NO_AUTO_VALUE_ON_ZERO";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8 */;
 
 --
 -- Database: `rflow`
@@ -26,7 +32,7 @@ CREATE TABLE IF NOT EXISTS `access` (
   `service` varchar(255) DEFAULT NULL,
   `level` tinyint(1) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=33 ;
 
 -- --------------------------------------------------------
 
@@ -43,7 +49,7 @@ CREATE TABLE IF NOT EXISTS `akteth` (
   `name` varchar(100) NOT NULL DEFAULT '',
   `device` varchar(10) NOT NULL DEFAULT '',
   PRIMARY KEY (`ID`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2183279 ;
 
 -- --------------------------------------------------------
 
@@ -58,7 +64,7 @@ CREATE TABLE IF NOT EXISTS `aktrouter` (
   `lastflow` varchar(7) NOT NULL DEFAULT '0',
   `ploss` int(11) NOT NULL DEFAULT '0',
   PRIMARY KEY (`ID`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=417376 ;
 
 -- --------------------------------------------------------
 
@@ -71,7 +77,7 @@ CREATE TABLE IF NOT EXISTS `globals` (
   `name` varchar(20) NOT NULL DEFAULT '',
   `value` varchar(50) NOT NULL DEFAULT '',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=417631 ;
 
 -- --------------------------------------------------------
 
@@ -87,9 +93,8 @@ CREATE TABLE IF NOT EXISTS `kermit_host` (
   `allowed` int(1) NOT NULL DEFAULT '0',
   `image` varchar(255) NOT NULL DEFAULT '',
   `ip` varchar(15) NOT NULL,
-  PRIMARY KEY (`id`),
-  UNIQUE KEY `mac` (`mac`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=27 ;
 
 -- --------------------------------------------------------
 
@@ -103,8 +108,9 @@ CREATE TABLE IF NOT EXISTS `log` (
   `args` varchar(255) DEFAULT NULL,
   `message` varchar(255) DEFAULT NULL,
   `xmlrpc_return` text,
+  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=426822 ;
 
 -- --------------------------------------------------------
 
@@ -118,7 +124,7 @@ CREATE TABLE IF NOT EXISTS `speed` (
   `down_mbps` float NOT NULL,
   `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1127 ;
 
 -- --------------------------------------------------------
 
@@ -193,7 +199,7 @@ CREATE TABLE IF NOT EXISTS `traffic` (
   `srcport` varchar(11) NOT NULL DEFAULT '',
   `dstport` varchar(11) NOT NULL DEFAULT '',
   PRIMARY KEY (`ID`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=656389 ;
 
 -- --------------------------------------------------------
 
@@ -211,7 +217,7 @@ CREATE TABLE IF NOT EXISTS `traffic_history` (
   `up_avg` int(10) NOT NULL DEFAULT '0',
   `down_avg` int(10) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=MyISAM  DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=275635 ;
 
 -- --------------------------------------------------------
 

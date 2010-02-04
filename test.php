@@ -32,11 +32,11 @@ test_table($mysqli, 'speed', 'id, up_mbps, down_mbps, created_at');
 test_table($mysqli, 'traffic', 'ID, zeit, name, datum, uloktets');
 test_table($mysqli, 'traffic_history', 'id, start_time, end_time, up, ip, down, up_avg, down_avg');
 test_table($mysqli, 'wlanclients', 'mac, ip, rssi, location, status');
-$res = $mysqli->query('SELECT DISTINCT mac, COUNT(mac) as `count` FROM akteth');
+$res = $mysqli->query('SELECT COUNT(DISTINCT mac) as `distinct_count`, COUNT(mac) as `count` FROM akteth');
 if(!$res) trigger_error('Error running query. '.$mysqli->error,E_USER_ERROR);
 
 while($mac = $res->fetch_array(MYSQLI_ASSOC)):
-	if($mac['count'] > 1) die("\nFAIL: There are duplicate MAC addresses in the rflow table. This will cause massive failures.");
+	if($mac['count'] !== $mac['distinct_count']) die("\nFAIL: There are duplicate MAC addresses in the rflow table. This will cause massive failures.");
 endwhile;
 $mysqli->close();
 echo "\n";

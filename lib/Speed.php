@@ -77,14 +77,24 @@ class Speed extends Kermit_Module{
 	// Returns a bytes per second count
 	public static function download(){
 		global $kermit;
-		return $kermit->speed->downloadSpeed();
-		
+		try{
+			$avg = $kermit->speed->downloadSpeed();
+		}
+		catch(Exception $e){
+			$avg = 0;
+		}
+		return $avg;
 	}
 	
 	// Returns a megabit per second count
 	public static function downloadMbps(){
 		global $kermit;
-		$avg = $kermit->speed->downloadSpeed();
+		try{
+			$avg = $kermit->speed->downloadSpeed();
+		}
+		catch(Exception $e){
+			$avg = 0;
+		}
 		return ($avg / (1024*1024)) * 8; // In Mbps
 	}
 	
@@ -95,7 +105,7 @@ class Speed extends Kermit_Module{
 			$avg = $kermit->speed->uploadSpeed();
 		}
 		catch(Exception $e){
-			$avg = 100000;
+			$avg = 0;
 		}
 		$up = ($avg / (1024*1024)) * 8;
 		
@@ -103,7 +113,7 @@ class Speed extends Kermit_Module{
 			$avg = $kermit->speed->downloadSpeed();
 		}
 		catch(Exception $e){
-			$avg = 100000;
+			$avg = 0;
 		}
 		$down = ($avg / (1024*1024)) * 8;
 		
@@ -130,14 +140,24 @@ class Speed extends Kermit_Module{
 	// Returns a bytes per second count
 	public static function upload(){
 		global $kermit;
-		return $kermit->speed->uploadSpeed();
-		
+		try{
+			$avg = $kermit->speed->uploadSpeed();
+		}
+		catch(Exception $e){
+			$avg = 0;
+		}
+		return $avg;
 	}
 	
 	// Returns a megabit per second count
 	public static function uploadMbps(){
 		global $kermit;
-		$avg = $kermit->speed->uploadSpeed();
+		try{
+			$avg = $kermit->speed->uploadSpeed();
+		}
+		catch(Exception $e){
+			$avg = 0;
+		}
 		return ($avg / (1024*1024)) * 8; // In Mbps
 	}
 }
