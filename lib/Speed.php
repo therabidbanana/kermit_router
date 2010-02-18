@@ -13,7 +13,7 @@ class Speed extends Kermit_Module{
 	}
 	
 	public function downloadSpeed(){
-		$url = 'http://davidhaslem.com/kermit/';
+		$url = 'http://www-dev.research.cc.gatech.edu/projects/kermit/bandwidth_tests/';
 		$file = 'download_test.php';
 		$seed  = md5(time());
 		srand(time());
@@ -40,7 +40,7 @@ class Speed extends Kermit_Module{
 	}
 	
 	public function uploadSpeed(){
-		$url = 'http://davidhaslem.com/kermit/';
+		$url = 'http://www-dev.research.cc.gatech.edu/projects/kermit/bandwidth_tests/';
 		$file = 'upload_test.php';
 		$seed  = time();
 		srand($seed);
