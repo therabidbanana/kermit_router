@@ -194,7 +194,12 @@ class History extends Kermit_Module{
 				->orderBy('date ASC, time ASC')
 				->limit(1)
 				->fetchOne();
-			$started = strtotime($other->date . ' ' . $other->time);
+			if($other){
+				$started = strtotime($other->date . ' ' . $other->time);
+			}
+			else{
+				$started = time();
+			}
 		else:
 			$started = strtotime($date->end_time);
 		endif;
