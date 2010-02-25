@@ -227,7 +227,7 @@ class History extends Kermit_Module{
 		
 		$ended = time();
 		
-		$del_date = date('Y-m-d', ($started - (60*60*24*40))); // Delete history older than 40 days
+		$del_date = date('Y-m-d', ($started - (60*60*24*3))); // Delete history older than 14 days
 		// Wipe the traffic table
 		Doctrine_Query::create()
 			->delete('Traffic')
